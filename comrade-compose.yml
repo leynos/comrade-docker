@@ -4,6 +4,11 @@ comrade:
    - db
 db:
   image: "mdillon/postgis:9.4"
+  environment:
+   - "POSTGRES_USER=ssp_canvassing"
+
+   # Change this, obviously
+   - "POSTGRES_PASSWORD=ssp_canvassing"
 nginx:
   image: "nginx:1.7"
   links:
