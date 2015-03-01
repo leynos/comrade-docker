@@ -1,16 +1,17 @@
 # Docker amd Compose Files for Comrade
 
-The Dockerfile can be used to create a repeatable deployment environment for the [COMRADE](https://github.com/scotm/canvassing) canvasing suite.  The docker-compose.yml file automatically loads supporting containers (database and nginx), and configures these to support a new instance of COMRADE.
+The Dockerfile can be used to create a repeatable deployment environment for the [COMRADE](https://github.com/scotm/canvassing) canvasing suite by the Scottish Socialist Party.  The docker-compose.yml file automatically loads supporting containers (database and nginx), and configures these to support a new instance of COMRADE.
 
 ## Building:
 
-    docker build -t comrade .
+    git clone https://github.com/scotm/canvassing.git comrade
+    docker build -t leynos/comrade .
 
 ## Running:
 
 Using docker-compose:
 
-(Coming soon)
+    docker-compose up
 
 ## To Do
 
@@ -20,7 +21,7 @@ Actually get the whole shebang running.
 
 ## Dependencies
 
-This docker file was tested with Docker 1.3.1, but should work with any newer version.
+This docker file was tested with Docker 1.3.1, but should work with any newer version.  Installation instructions can be found [here](https://docs.docker.com/installation/).
 
 The compose file requires ```docker-compose``` which can be installed from [here](https://docs.docker.com/compose/install/).
 
