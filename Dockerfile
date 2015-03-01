@@ -50,10 +50,14 @@ RUN chown -R comrade:comrade /opt/comrade
 # Expose port 8080 for WSGI requests
 EXPOSE 8080
 
+# Add encapsulation script
+ADD files/run.py /
+RUN chmod 555 /run.py
+
 # Everything from this point on will be executed as the comrade user
 USER comrade
 WORKDIR /opt/comrade
 
 RUN bower install
 
-CMD ["/usr/local/bin/uwsgi", "--socket", "0.0.0.0:8080", "--module", "ssp_canvassing.wsgi"]
+CMD ["/run.py"]
