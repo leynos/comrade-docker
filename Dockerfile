@@ -38,4 +38,4 @@ WORKDIR /opt/comrade
 
 RUN bower install
 
-#CMD ["/usr/local/bin/uwsgi", "--http", ":8080", "--module", "mysite.wsgi"]
+CMD ["/usr/local/bin/uwsgi", "--socket", "0.0.0.0:8080", "--module", "ssp_canvassing.wsgi"]
