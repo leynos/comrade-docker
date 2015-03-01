@@ -1,0 +1,3 @@
+[submodule "comrade"]
+	path = comrade
+	url = ./comrade
