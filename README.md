@@ -1,6 +1,6 @@
 # Docker amd Compose Files for Comrade
 
-The Dockerfile can be used to create a repeatable deployment environment for the [COMRADE](https://github.com/scotm/canvassing) canvasing suite.  The comrade-compose.yml file automatically loads supporting containers (database and nginx), and configures these to support a new instance of COMRADE.
+The Dockerfile can be used to create a repeatable deployment environment for the [COMRADE](https://github.com/scotm/canvassing) canvasing suite.  The docker-compose.yml file automatically loads supporting containers (database and nginx), and configures these to support a new instance of COMRADE.
 
 ## Building:
 
