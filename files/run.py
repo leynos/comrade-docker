@@ -1,12 +1,28 @@
 #!/usr/bin/env python3
 
-import random, os
+import random, os, socket
 from subprocess import call
+
+def service_exists(host, port):
+    """Return True if a connection can be established to the given port on the
+    given hostname"""
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(1)
+        sock.connect((host, port))
+        sock.close()
+        return True
+    except:
+        return False
 
 def execute_pg_cmd(cmd):
     """Execute a command on the postgress database server"""
     call_cmd = ['psql', '-h', 'db', '-d', 'ssp_canvassing', '-U', 'ssp_canvassing', '-w', '-c']
     call(call_cmd + [cmd])
+
+while not service_exists('db', 5432):
+    time.sleep(3)
+    print('Waiting for database to start')
 
 pgpass_file = '/var/opt/comrade/.pgpass'
 secrets_file = '/opt/comrade/ssp_canvassing/settings/secrets.py'
