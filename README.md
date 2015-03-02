@@ -15,8 +15,6 @@ Using docker-compose:
 
 ## To Do
 
-Incorporate database configuration into compose logic (i.e., this most likely won't do anything yet).
-
 Actually get the whole shebang running.
 
 ## Dependencies
