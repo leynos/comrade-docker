@@ -50,6 +50,6 @@ DATABASES = {{
 }}
 """.format(db_password))
 
-execute_pg_cmd('CREATE EXTENSION postgis;')
-execute_pg_cmd('CREATE EXTENSION postgis_topology;')
+execute_pg_cmd('CREATE EXTENSION IF NOT EXISTS postgis;')
+execute_pg_cmd('CREATE EXTENSION IF NOT EXISTS postgis_topology;')
 call(['/usr/local/bin/uwsgi', '--socket', '0.0.0.0:8080', '--module', 'ssp_canvassing.wsgi'])
