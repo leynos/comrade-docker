@@ -24,7 +24,7 @@ MAINTAINER Leynos <leynos@troubledskies.net>
 RUN apt-get update && apt-get -y install --force-yes curl postgresql-client-9.4 libpq-dev libssl-dev krb5-multidev comerr-dev python-all-dev libexpat1-dev libc6-dev libssl1.0.0 libc6 gcc apt-transport-https libgeos-dev libproj-dev libgdal-dev
 
 # Install node-js and git
-RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && ( echo 'deb https://deb.nodesource.com/node utopic main' && echo 'deb-src https://deb.nodesource.com/node utopic main' ) > /etc/apt/sources.list.d/nodesource.list && apt-get update && apt-get -y install nodejs git
+RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && ( echo 'deb https://deb.nodesource.com/node utopic main' && echo 'deb-src https://deb.nodesource.com/node utopic main' ) > /etc/apt/sources.list.d/nodesource.list && apt-get update && apt-get -y install nodejs git && npm update -g npm
 
 # Install pip from Python Packaging Authority
 RUN curl https://bootstrap.pypa.io/get-pip.py | python -
