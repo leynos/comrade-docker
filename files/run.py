@@ -59,9 +59,17 @@ if 'WITH_BOWER_CACHE' in os.environ:
 }
 """)
 
+npm_verbose = 'NPM_VERBOSE' in os.environ
+
 execute_pg_cmd('CREATE EXTENSION IF NOT EXISTS postgis;')
 execute_pg_cmd('CREATE EXTENSION IF NOT EXISTS postgis_topology;')
-call(['npm-cache', 'install', 'npm'])
-call(['npm-cache', 'install', 'bower'])
+
+npm_cmd = ['npm', 'install']
+if npm_verbose:
+    npm_cmd += ['--verbose']
+call(npm_cmd)
+
+call(['bower', 'install'])
+
 call(['grunt'])
 call(['/usr/local/bin/uwsgi', '--socket', '0.0.0.0:8080', '--module', 'ssp_canvassing.wsgi'])
