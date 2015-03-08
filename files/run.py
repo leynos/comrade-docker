@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import random, os, socket
+import random, os, socket, time
 from subprocess import call
 
 def service_exists(host, port):
