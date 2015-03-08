@@ -46,6 +46,9 @@ RUN pip install -r /opt/comrade/requirements/local.txt && rm -rf /tmp/pip_build_
 # Add the application itself
 ADD comrade /opt/comrade
 
+# Add a robots.txt file to disallow Google et al
+ADD files/robots.txt /opt/comrade/
+
 # Set up a user for the application
 RUN useradd -b /var/opt -s /bin/false -r -m comrade
 RUN chown -R comrade:comrade /opt/comrade
