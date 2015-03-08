@@ -50,8 +50,7 @@ ADD comrade /opt/comrade
 ADD files/robots.txt /opt/comrade/
 
 # Set up a user for the application
-RUN useradd -b /var/opt -s /bin/false -r -m comrade
-RUN chown -R comrade:comrade /opt/comrade
+RUN useradd -b /var/opt -s /bin/false -r -m comrade && chown -R comrade:comrade /opt/comrade
 
 # Provide app content as a volume
 VOLUME /opt/comrade
