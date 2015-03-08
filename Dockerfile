@@ -18,9 +18,10 @@ MAINTAINER Leynos <leynos@troubledskies.net>
 
 # Install Python and requirements
 # For utopic (Python 3)
-#RUN apt-get update && apt-get -y install --force-yes python3-all curl postgresql-client-9.4 libpq-dev python3-dev libssl-dev krb5-multidev comerr-dev libpython3-dev python3.4-dev libexpat1-dev libc6-dev libssl1.0.0=1.0.1f-1ubuntu9.1 libc6=2.19-10ubuntu2.3 gcc apt-transport-https libgeos-dev
+#RUN apt-get update && apt-get -y install --force-yes python3-all curl postgresql-client-9.4 libpq-dev python3-dev libssl-dev krb5-multidev comerr-dev libpython3-dev python3.4-dev libexpat1-dev libc6-dev libssl1.0.0=1.0.1f-1ubuntu9.1 libc6=2.19-10ubuntu2.3 gcc apt-transport-https libgeos-dev libproj-dev libgdal-dev
 # For utopic (Python 2)
-RUN apt-get update && apt-get -y install --force-yes curl postgresql-client-9.4 libpq-dev libssl-dev krb5-multidev comerr-dev python-all-dev libexpat1-dev libc6-dev libssl1.0.0=1.0.1f-1ubuntu9.1 libc6=2.19-10ubuntu2.3 gcc apt-transport-https libgeos-dev
+#RUN apt-get update && apt-get -y install --force-yes curl postgresql-client-9.4 libpq-dev libssl-dev krb5-multidev comerr-dev python-all-dev libexpat1-dev libc6-dev libssl1.0.0=1.0.1f-1ubuntu9.1 libc6=2.19-10ubuntu2.3 gcc apt-transport-https libgeos-dev libproj-dev libgdal-dev
+RUN apt-get update && apt-get -y install --force-yes curl postgresql-client-9.4 libpq-dev libssl-dev krb5-multidev comerr-dev python-all-dev libexpat1-dev libc6-dev libssl1.0.0 libc6 gcc apt-transport-https libgeos-dev libproj-dev libgdal-dev
 
 # Install node-js and git
 RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && ( echo 'deb https://deb.nodesource.com/node utopic main' && echo 'deb-src https://deb.nodesource.com/node utopic main' ) > /etc/apt/sources.list.d/nodesource.list && apt-get update && apt-get -y install nodejs git
