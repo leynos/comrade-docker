@@ -16,7 +16,6 @@ comrade:
   image: leynos/comrade
   links:
    - db
-   - bower
   environment:
    - "DJANGO_SETTINGS_MODULE=ssp_canvassing.settings.base"
   volumes:
