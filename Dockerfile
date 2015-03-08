@@ -50,6 +50,9 @@ ADD comrade /opt/comrade
 RUN useradd -b /var/opt -s /bin/false -r -m comrade
 RUN chown -R comrade:comrade /opt/comrade
 
+# Provide app content as a volume
+VOLUME /opt/comrade
+
 # Expose port 8080 for WSGI requests
 EXPOSE 8080
 

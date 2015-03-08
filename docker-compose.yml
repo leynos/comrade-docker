@@ -12,7 +12,7 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF 
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. 
 
-comrade:
+app:
   image: leynos/comrade
   links:
    - db
@@ -30,8 +30,10 @@ db:
 nginx:
   image: "nginx:1.7"
   links:
-   - comrade
+   - app:comrade
   ports:
    - "80:80"
   volumes:
    - "./files/nginx.conf:/etc/nginx/nginx.conf:ro"
+  volumes_from:
+   - app
