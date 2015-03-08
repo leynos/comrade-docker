@@ -61,5 +61,6 @@ if 'WITH_BOWER_CACHE' in os.environ:
 
 execute_pg_cmd('CREATE EXTENSION IF NOT EXISTS postgis;')
 execute_pg_cmd('CREATE EXTENSION IF NOT EXISTS postgis_topology;')
+call(['npm-cache', 'install', 'npm'])
 call(['npm-cache', 'install', 'bower'])
 call(['/usr/local/bin/uwsgi', '--socket', '0.0.0.0:8080', '--module', 'ssp_canvassing.wsgi'])
