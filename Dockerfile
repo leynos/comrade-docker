@@ -35,7 +35,7 @@ RUN cd /opt && curl -L https://github.com/bbengfort/django-generic-json-views/ar
 RUN pip install uwsgi && rm -rf /tmp/pip_build_root
 
 # Install bower, the package manager for client-side JS libs
-RUN npm install -g bower
+RUN npm install -g bower grunt-cli npm-cache
 
 # Run pip with the local requirements to install the remainer of the Python lib requirements
 RUN mkdir -p /opt/comrade/requirements
@@ -58,6 +58,7 @@ RUN chmod 555 /run.py
 
 # Everything from this point on will be executed as the comrade user
 USER comrade
+RUN mkdir /var/opt/comrade/.package_cache
 WORKDIR /opt/comrade
 
 CMD ["/run.py"]

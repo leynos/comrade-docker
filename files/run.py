@@ -50,6 +50,16 @@ DATABASES = {{
 }}
 """.format(db_password))
 
+if 'WITH_BOWER_CACHE' in os.environ:
+        bowerrc_file = os.path.join(os.path.expanduser('~'), '.bowerrc')
+        with open(bowerrc_file, 'w') as handle:
+            handle.write("""\
+{
+    "registry": "http://bower:5678"
+}
+""")
+
 execute_pg_cmd('CREATE EXTENSION IF NOT EXISTS postgis;')
 execute_pg_cmd('CREATE EXTENSION IF NOT EXISTS postgis_topology;')
+call(['npm-cache', 'install', 'bower'])
 call(['/usr/local/bin/uwsgi', '--socket', '0.0.0.0:8080', '--module', 'ssp_canvassing.wsgi'])
