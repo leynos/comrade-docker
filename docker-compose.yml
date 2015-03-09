@@ -18,7 +18,7 @@ app:
    - db
   environment:
    - "DJANGO_SETTINGS_MODULE=ssp_canvassing.settings.base"
-   - "NPM_VERBOSE=true"
+   #- "NPM_VERBOSE=true"
 db:
   image: "mdillon/postgis:9.4"
   environment:

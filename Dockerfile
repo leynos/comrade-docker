@@ -36,7 +36,7 @@ RUN cd /opt && curl -L https://github.com/bbengfort/django-generic-json-views/ar
 RUN pip install uwsgi && rm -rf /tmp/pip_build_root
 
 # Install npm libraries
-RUN npm install -g bower grunt-cli npm-cache node-sass node-gyp && npm dedupe -g
+RUN npm install -g bower grunt-cli npm-cache uglify-js node-sass && npm dedupe -g
 
 # Run pip with the local requirements to install the remainer of the Python lib requirements
 RUN mkdir -p /opt/comrade/requirements

@@ -3,6 +3,8 @@
 import random, os, socket, time
 from subprocess import call
 
+from unipath import Path
+
 def service_exists(host, port):
     """Return True if a connection can be established to the given port on the
     given hostname"""
@@ -19,6 +21,42 @@ def execute_pg_cmd(cmd):
     """Execute a command on the postgress database server"""
     call_cmd = ['psql', '-h', 'db', '-d', 'ssp_canvassing', '-U', 'ssp_canvassing', '-w', '-c']
     call(call_cmd + [cmd])
+
+def prep():
+    # For now, just concatenate these.  We'll uglify later.
+    with open('js/production.js', 'w') as outfile:
+        print('Concatenating Javascript:')
+        for jsfile in [
+                'bower_components/jquery/dist/jquery.js',
+                'bower_components/jquery-placeholder/jquery.placeholder.js',
+                'bower_components/jquery.cookie/jquery.cookie.js',
+                'bower_components/fastclick/lib/fastclick.js',
+                'bower_components/modernizr/modernizr.js',
+                'bower_components/foundation/js/foundation.js',
+                'bower_components/leaflet/dist/leaflet-src.js',
+                'js/accordion_mods.js',
+            ]:
+            print(jsfile)
+            with open(jsfile) as infile:
+                outfile.write(infile.read())
+    print('Uglifying Javascript')
+    call(['uglifyjs', '-o', 'js/production.min.js', 'js/production.js'])
+
+    # Again, copy for now.  We'll do something nicer later.
+    images_build = Path('./images/build')
+    if not images_build.exists():
+        images_build.mkdir(parents=True)
+    print('Copying images:')
+    for path in Path('.').walk(filter=lambda x: x.ext in ['.png', '.jpg', '.gif'] and x.parent != images_build):
+        print(path)
+        path.copy(Path(images_build, path.name))
+
+    # Compile stylesheet with sass
+    print('Compiling stylesheet')
+    with open('css/main.css', 'w') as outfile:
+        with open('scss/main.scss') as infile:
+            call(['node-sass', '--output-style', 'compressed', '--include-path', 'bower_components/foundation/scss:scss'], stdin=infile, stdout=outfile)
+            #outfile.write(sass.compile_string(infile.read(), include_paths='bower_components/foundation/scss:scss'))
 
 while not service_exists('db', 5432):
     time.sleep(3)
@@ -50,26 +88,25 @@ DATABASES = {{
 }}
 """.format(db_password))
 
-if 'WITH_BOWER_CACHE' in os.environ:
-        bowerrc_file = os.path.join(os.path.expanduser('~'), '.bowerrc')
-        with open(bowerrc_file, 'w') as handle:
-            handle.write("""\
-{
-    "registry": "http://bower:5678"
-}
-""")
-
 npm_verbose = 'NPM_VERBOSE' in os.environ
 
 execute_pg_cmd('CREATE EXTENSION IF NOT EXISTS postgis;')
 execute_pg_cmd('CREATE EXTENSION IF NOT EXISTS postgis_topology;')
 
-npm_cmd = ['npm', 'install']
-if npm_verbose:
-    npm_cmd += ['--verbose']
-call(npm_cmd)
+# Don't do npm install for now.  It's bad for the blood pressure.
+#npm_cmd = ['npm', 'install']
+#if npm_verbose:
+#    npm_cmd += ['--verbose']
+#call(npm_cmd)
 
 call(['bower', 'install'])
 
-call(['grunt'])
+# Don't even go there.
+#call(['grunt'])
+
+prep()
+
+Path('./static').mkdir()
+call(['python', './manage.py', 'collectstatic', '--clear', '--noinput'])
+
 call(['/usr/local/bin/uwsgi', '--socket', '0.0.0.0:8080', '--module', 'ssp_canvassing.wsgi'])
