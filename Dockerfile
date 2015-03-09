@@ -35,8 +35,8 @@ RUN cd /opt && curl -L https://github.com/bbengfort/django-generic-json-views/ar
 # Install the micro wsgi server
 RUN pip install uwsgi && rm -rf /tmp/pip_build_root
 
-# Install bower, the package manager for client-side JS libs
-RUN npm install -g bower grunt-cli npm-cache
+# Install npm libraries
+RUN npm install -g bower grunt-cli npm-cache node-sass node-gyp && npm dedupe -g
 
 # Run pip with the local requirements to install the remainer of the Python lib requirements
 RUN mkdir -p /opt/comrade/requirements
@@ -46,14 +46,14 @@ RUN pip install -r /opt/comrade/requirements/local.txt && rm -rf /tmp/pip_build_
 # Add the application itself
 ADD comrade /opt/comrade
 
+# Remove the .gitignore file to prevent it interfering with npm
+RUN rm -f /opt/comrade/.gitignore
+
 # Add a robots.txt file to disallow Google et al
 ADD files/robots.txt /opt/comrade/
 
 # Set up a user for the application
 RUN useradd -b /var/opt -s /bin/false -r -m comrade && chown -R comrade:comrade /opt/comrade
-
-# Provide app content as a volume
-VOLUME /opt/comrade
 
 # Expose port 8080 for WSGI requests
 EXPOSE 8080
@@ -66,5 +66,8 @@ RUN chmod 555 /run.py
 USER comrade
 RUN mkdir /var/opt/comrade/.package_cache
 WORKDIR /opt/comrade
+
+# Provide app content as a volume
+VOLUME /opt/comrade
 
 CMD ["/run.py"]
